@@ -37,129 +37,103 @@
     user-select: none;
   }
 
-  /* ── Scoreboard ── */
+  /* Scoreboard */
   #scoreboard {
-    display: flex;
-    gap: 12px;
-    padding: 12px 20px;
-    background: var(--panel);
-    border-bottom: 3px solid var(--pancake);
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    z-index: 10;
+    display: flex; gap: 12px; padding: 12px 20px;
+    background: var(--panel); border-bottom: 3px solid var(--pancake);
+    width: 100%; justify-content: center; flex-wrap: wrap; align-items: center; z-index: 10;
   }
   .score-chip {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #fff;
-    min-width: 100px;
-    justify-content: center;
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px;
+    font-weight: 600; font-size: 0.95rem; color: #fff;
+    min-width: 100px; justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
-  .score-chip.int    { background: var(--int-color); }
-  .score-chip.float  { background: var(--float-color); }
-  .score-chip.str    { background: var(--str-color); }
-  .score-chip.bool   { background: var(--bool-color); }
+  .score-chip.active-round { transform: scale(1.1); box-shadow: 0 0 16px rgba(255,255,255,0.5); }
+  .score-chip.complete { opacity: 0.55; }
+  .score-chip.int   { background: var(--int-color); }
+  .score-chip.float { background: var(--float-color); }
+  .score-chip.str   { background: var(--str-color); }
+  .score-chip.bool  { background: var(--bool-color); }
   .score-chip .pts {
-    background: rgba(255,255,255,0.3);
-    border-radius: 10px;
-    padding: 1px 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
+    background: rgba(255,255,255,0.3); border-radius: 10px;
+    padding: 1px 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
   }
   #total-score {
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--syrup);
-    padding: 6px 16px;
-    border: 2px dashed var(--pancake);
-    border-radius: 20px;
+    font-weight: 700; font-size: 1rem; color: var(--syrup);
+    padding: 6px 16px; border: 2px dashed var(--pancake); border-radius: 20px;
   }
 
-  /* ── Round Banner ── */
+  /* Round Banner */
   #round-banner {
-    text-align: center;
-    padding: 8px;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    z-index: 10;
-    width: 100%;
+    text-align: center; padding: 8px; font-size: 1.15rem;
+    font-weight: 700; letter-spacing: 0.5px; z-index: 10; width: 100%;
+    transition: background 0.5s;
   }
-  #round-banner.int    { background: var(--int-color); color: #fff; }
-  #round-banner.float  { background: var(--float-color); color: #fff; }
-  #round-banner.str    { background: var(--str-color); color: #fff; }
-  #round-banner.bool   { background: var(--bool-color); color: #fff; }
+  #round-banner.int   { background: var(--int-color); color: #fff; }
+  #round-banner.float { background: var(--float-color); color: #fff; }
+  #round-banner.str   { background: var(--str-color); color: #fff; }
+  #round-banner.bool  { background: var(--bool-color); color: #fff; }
 
-  /* ── Game Canvas ── */
+  /* Game Canvas */
   #game-area {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    max-width: 800px;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 20% 80%, rgba(232,168,69,0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(139,94,52,0.06) 0%, transparent 50%),
-      var(--bg);
+    position: relative; flex: 1; width: 100%; max-width: 800px; overflow: hidden;
+    background: radial-gradient(circle at 20% 80%, rgba(232,168,69,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139,94,52,0.06) 0%, transparent 50%), var(--bg);
   }
 
-  /* ── Pancakes ── */
-  .pancake {
-    position: absolute;
-    width: 150px;
-    text-align: center;
-    transition: none;
-    z-index: 5;
-  }
-  .pancake-body {
-    background: linear-gradient(135deg, var(--pancake) 0%, var(--pancake-dark) 100%);
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    padding: 14px 10px 18px;
-    box-shadow: 0 4px 8px rgba(139,94,52,0.25), inset 0 -3px 6px rgba(0,0,0,0.1);
+  /* Pancakes */
+  .pancake { position: absolute; width: 160px; text-align: center; z-index: 5; }
+  .pancake-stack {
     position: relative;
   }
+  /* Main pancake body */
+  .pancake-body {
+    background: radial-gradient(ellipse at 40% 35%, #f0c060 0%, #e8a845 40%, #d4942e 100%);
+    border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+    padding: 16px 12px 20px;
+    box-shadow:
+      inset 0 2px 4px rgba(255,220,140,0.4),
+      inset 0 -4px 8px rgba(160,100,30,0.25);
+    position: relative;
+    border: 2px solid rgba(180,120,40,0.3);
+  }
+  /* Glossy highlight */
   .pancake-body::before {
-    content: '';
-    position: absolute;
-    top: 6px; left: 20%; width: 60%; height: 8px;
-    background: rgba(255,255,255,0.25);
+    content: ''; position: absolute; top: 5px; left: 18%; width: 50%; height: 12px;
+    background: radial-gradient(ellipse, rgba(255,240,200,0.5) 0%, transparent 70%);
     border-radius: 50%;
   }
+  /* Butter pat */
+  .pancake-butter {
+    position: absolute; top: 4px; right: 18px;
+    width: 18px; height: 12px;
+    background: linear-gradient(135deg, #fff6a8 0%, #ffe066 50%, #ffd633 100%);
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(180,140,0,0.3), inset 0 1px 2px rgba(255,255,255,0.6);
+    transform: rotate(-8deg);
+  }
+  /* Label */
   .pancake-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--text);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    font-weight: 700; color: #3e2723;
+    line-height: 1.3; position: relative; z-index: 2;
+    text-shadow: 0 0 4px rgba(255,220,140,0.7), 0 1px 0 rgba(255,255,255,0.3);
     word-break: break-all;
-    line-height: 1.3;
   }
 
-  /* ── Player (Python icon) ── */
+  /* Player */
   #chef {
-    position: absolute;
-    bottom: 10px;
-    width: 110px;
-    height: 130px;
-    z-index: 8;
+    position: absolute; bottom: 10px; width: 120px; height: 130px; z-index: 8;
     transition: left 0.05s linear;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
   }
 
-  /* ── Feedback Flash ── */
+  /* Feedback */
   .feedback {
-    position: absolute;
-    font-weight: 700;
-    font-size: 1.4rem;
-    z-index: 20;
-    pointer-events: none;
-    animation: floatUp 0.9s ease-out forwards;
+    position: absolute; font-weight: 700; font-size: 1.4rem; z-index: 20;
+    pointer-events: none; animation: floatUp 0.9s ease-out forwards;
   }
   .feedback.good { color: var(--correct); }
   .feedback.bad  { color: var(--wrong); }
@@ -168,104 +142,163 @@
     100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
   }
 
-  /* ── Screens ── */
+  /* Overlay Screens */
   .overlay {
-    position: fixed; inset: 0;
-    background: rgba(62,39,35,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
+    position: fixed; inset: 0; background: rgba(62,39,35,0.7);
+    display: flex; align-items: center; justify-content: center; z-index: 100;
   }
   .overlay.hidden { display: none; }
   .modal {
-    background: var(--panel);
-    border: 4px solid var(--pancake);
-    border-radius: 20px;
-    padding: 40px 48px;
-    text-align: center;
-    max-width: 520px;
-    width: 90%;
+    background: var(--panel); border: 4px solid var(--pancake); border-radius: 20px;
+    padding: 40px 48px; text-align: center; max-width: 520px; width: 90%;
     box-shadow: 0 12px 40px rgba(139,94,52,0.35);
   }
-  .modal h1 {
-    font-size: 2rem;
-    color: var(--syrup);
-    margin-bottom: 10px;
-  }
-  .modal p {
-    color: var(--text-light);
-    margin-bottom: 8px;
-    line-height: 1.5;
-    font-size: 0.95rem;
-  }
+  .modal h1 { font-size: 2rem; color: var(--syrup); margin-bottom: 10px; }
+  .modal p { color: var(--text-light); margin-bottom: 8px; line-height: 1.5; font-size: 0.95rem; }
   .modal .code-example {
-    font-family: 'JetBrains Mono', monospace;
-    background: #3e2723;
-    color: #ffe066;
-    padding: 10px 16px;
-    border-radius: 8px;
-    margin: 12px 0;
-    font-size: 0.85rem;
-    text-align: left;
-    line-height: 1.6;
+    font-family: 'JetBrains Mono', monospace; background: #3e2723; color: #ffe066;
+    padding: 10px 16px; border-radius: 8px; margin: 12px 0; font-size: 0.85rem;
+    text-align: left; line-height: 1.6;
   }
   .btn {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 12px 36px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    color: #fff;
-    background: var(--pancake);
-    box-shadow: 0 4px 12px rgba(232,168,69,0.4);
+    display: inline-block; margin-top: 18px; padding: 12px 36px;
+    font-family: 'Fredoka', sans-serif; font-size: 1.1rem; font-weight: 700;
+    border: none; border-radius: 30px; cursor: pointer; color: #fff;
+    background: var(--pancake); box-shadow: 0 4px 12px rgba(232,168,69,0.4);
     transition: transform 0.15s, box-shadow 0.15s;
   }
   .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(232,168,69,0.5); }
-  .btn:active { transform: translateY(0); }
 
-  /* ── Mobile Controls ── */
+  /* ═══════════════════════════════════
+     LEVEL TRANSITION
+     ═══════════════════════════════════ */
+  #level-transition {
+    position: fixed; inset: 0; z-index: 200; display: none;
+    align-items: center; justify-content: center; overflow: hidden;
+  }
+  #level-transition.active { display: flex; }
+
+  /* Curtain wipe */
+  .curtain-left, .curtain-right {
+    position: absolute; top: 0; bottom: 0; width: 50%; z-index: 1;
+  }
+  .curtain-left  { left: -50%; }
+  .curtain-right { right: -50%; }
+  #level-transition.animate-in .curtain-left  { animation: curtainInL 0.5s ease-out forwards; }
+  #level-transition.animate-in .curtain-right { animation: curtainInR 0.5s ease-out forwards; }
+  #level-transition.animate-out .curtain-left  { animation: curtainOutL 0.5s ease-in forwards; }
+  #level-transition.animate-out .curtain-right { animation: curtainOutR 0.5s ease-in forwards; }
+  @keyframes curtainInL  { to { left: 0; } }
+  @keyframes curtainInR  { to { right: 0; } }
+  @keyframes curtainOutL { from { left: 0; } to { left: -50%; } }
+  @keyframes curtainOutR { from { right: 0; } to { right: -50%; } }
+
+  /* Center content */
+  .level-content {
+    position: relative; z-index: 2; text-align: center;
+    opacity: 0; transform: scale(0.5);
+  }
+  #level-transition.show-content .level-content {
+    animation: lvlIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    animation-delay: 0.35s;
+  }
+  @keyframes lvlIn { to { opacity: 1; transform: scale(1); } }
+
+  .lvl-checkmark {
+    font-size: 3.5rem; opacity: 0;
+  }
+  #level-transition.show-content .lvl-checkmark {
+    animation: checkPop 0.5s ease-out forwards; animation-delay: 0.65s;
+  }
+  @keyframes checkPop {
+    0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+    60%  { transform: scale(1.4) rotate(5deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .lvl-complete-badge {
+    display: inline-block; padding: 6px 24px; border-radius: 30px;
+    background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3);
+    font-size: 1.1rem; font-weight: 600; color: #fff;
+    text-transform: uppercase; letter-spacing: 3px; margin: 8px 0;
+  }
+  .lvl-type-icon {
+    font-family: 'JetBrains Mono', monospace; font-size: 4.5rem; font-weight: 700;
+    color: #fff; text-shadow: 0 4px 24px rgba(0,0,0,0.4); margin: 8px 0;
+  }
+  .lvl-divider {
+    width: 60px; height: 3px; background: rgba(255,255,255,0.3);
+    margin: 20px auto; border-radius: 2px;
+  }
+  .lvl-next-label {
+    font-size: 0.9rem; color: rgba(255,255,255,0.5);
+    letter-spacing: 4px; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .lvl-next-type {
+    font-family: 'JetBrains Mono', monospace; font-size: 3rem; font-weight: 700;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3); margin: 4px 0;
+  }
+  .lvl-hint {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    color: rgba(255,255,255,0.55); margin-top: 12px;
+    background: rgba(0,0,0,0.2); padding: 8px 20px;
+    border-radius: 8px; display: inline-block;
+  }
+  .lvl-progress {
+    display: flex; gap: 10px; justify-content: center; margin-top: 20px;
+  }
+  .lvl-pip {
+    width: 36px; height: 6px; border-radius: 3px;
+    background: rgba(255,255,255,0.2); transition: background 0.3s;
+  }
+  .lvl-pip.done { background: rgba(255,255,255,0.85); }
+
+  /* Particles */
+  .t-particle {
+    position: absolute; border-radius: 50%; opacity: 0; z-index: 1; pointer-events: none;
+  }
+  #level-transition.show-content .t-particle {
+    animation: pDrift 2.5s ease-out forwards;
+  }
+  @keyframes pDrift {
+    0%   { opacity: 0; transform: translate(0,0) scale(0); }
+    15%  { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+  }
+
+  /* Sparkle ring */
+  .sparkle-ring {
+    position: absolute; top: 50%; left: 50%; width: 300px; height: 300px;
+    margin: -150px 0 0 -150px; border-radius: 50%; z-index: 1; pointer-events: none;
+    border: 2px solid rgba(255,255,255,0.15); opacity: 0;
+  }
+  #level-transition.show-content .sparkle-ring {
+    animation: ringPulse 2s ease-out forwards; animation-delay: 0.5s;
+  }
+  @keyframes ringPulse {
+    0%   { transform: scale(0.3); opacity: 0; }
+    30%  { opacity: 0.5; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  /* Mobile Controls */
   #mobile-controls {
-    display: none;
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    gap: 20px;
-    z-index: 50;
+    display: none; position: fixed; bottom: 16px; left: 50%;
+    transform: translateX(-50%); gap: 20px; z-index: 50;
   }
   .mobile-btn {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    background: rgba(232,168,69,0.85);
-    border: 3px solid var(--pancake-dark);
-    font-size: 2rem;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(232,168,69,0.85); border: 3px solid var(--pancake-dark);
+    font-size: 2rem; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
-  @media (pointer: coarse) {
-    #mobile-controls { display: flex; }
-  }
+  @media (pointer: coarse) { #mobile-controls { display: flex; } }
 
-  /* ── Win Screen Extras ── */
-  .confetti-container {
-    position: fixed; inset: 0;
-    pointer-events: none;
-    z-index: 99;
-    overflow: hidden;
-  }
+  /* Confetti */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 99; overflow: hidden; }
   .confetti {
-    position: absolute;
-    width: 10px; height: 10px;
-    border-radius: 2px;
+    position: absolute; width: 10px; height: 10px; border-radius: 2px;
     animation: confettiFall linear forwards;
   }
   @keyframes confettiFall {
@@ -276,50 +309,71 @@
 </head>
 <body>
 
-<!-- ── Scoreboard ── -->
 <div id="scoreboard">
-  <div class="score-chip int">int <span class="pts" id="score-int">0/5</span></div>
-  <div class="score-chip float">float <span class="pts" id="score-float">0/5</span></div>
-  <div class="score-chip str">str <span class="pts" id="score-str">0/5</span></div>
-  <div class="score-chip bool">bool <span class="pts" id="score-bool">0/5</span></div>
+  <div class="score-chip int" id="chip-int">int <span class="pts" id="score-int">0/5</span></div>
+  <div class="score-chip float" id="chip-float">float <span class="pts" id="score-float">0/5</span></div>
+  <div class="score-chip str" id="chip-str">str <span class="pts" id="score-str">0/5</span></div>
+  <div class="score-chip bool" id="chip-bool">bool <span class="pts" id="score-bool">0/5</span></div>
   <div id="total-score">Total: 0 / 20</div>
 </div>
 
-<!-- ── Round Banner ── -->
 <div id="round-banner" class="int">Round: Catch the <code>int</code> values!</div>
 
-<!-- ── Game Area ── -->
 <div id="game-area">
   <div id="chef">
-    <svg viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg" width="110" height="130">
-      <!-- plate -->
-      <ellipse cx="55" cy="12" rx="54" ry="10" fill="#ddd" stroke="#bbb" stroke-width="1.5"/>
-      <!-- Python logo body -->
-      <g transform="translate(15, 22) scale(0.9)">
+    <svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" width="120" height="130">
+      <defs>
+        <radialGradient id="plateShine" cx="40%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#fff" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="plateEdge" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e0e0e0"/>
+          <stop offset="50%" stop-color="#bdbdbd"/>
+          <stop offset="100%" stop-color="#9e9e9e"/>
+        </linearGradient>
+      </defs>
+      <!-- Plate shadow -->
+      <ellipse cx="60" cy="18" rx="58" ry="11" fill="rgba(0,0,0,0.1)"/>
+      <!-- Plate rim (outer) -->
+      <ellipse cx="60" cy="14" rx="58" ry="12" fill="url(#plateEdge)" stroke="#aaa" stroke-width="1"/>
+      <!-- Plate inner -->
+      <ellipse cx="60" cy="13" rx="50" ry="9" fill="#f5f5f5"/>
+      <!-- Plate shine -->
+      <ellipse cx="60" cy="13" rx="50" ry="9" fill="url(#plateShine)"/>
+      <!-- Rim highlight -->
+      <ellipse cx="60" cy="8" rx="40" ry="3" fill="rgba(255,255,255,0.35)"/>
+      <!-- Decorative rim dots -->
+      <circle cx="18" cy="14" r="2" fill="#ddd" opacity="0.5"/>
+      <circle cx="32" cy="8" r="2" fill="#ddd" opacity="0.5"/>
+      <circle cx="60" cy="5" r="2" fill="#ddd" opacity="0.5"/>
+      <circle cx="88" cy="8" r="2" fill="#ddd" opacity="0.5"/>
+      <circle cx="102" cy="14" r="2" fill="#ddd" opacity="0.5"/>
+      <!-- Python logo -->
+      <g transform="translate(22, 24) scale(0.85)">
         <!-- Blue half -->
-        <path d="M44.2,2.5C36,2.5,28.6,3.3,22.5,5c-7.9,2.2-9.3,6.8-9.3,12.9v9.5h22v3H13.2c-7.6,0-14.3,4.6-16.4,13.3
-          C-5.8,53.5-6,58.5-3.2,68c2.1,7.1,7,12,14.6,12h9.4V69.7c0-8.6,7.5-16.2,16.3-16.2h21.8c7.3,0,13.1-6,13.1-13.2V15.5
-          c0-7-6-12.2-13.1-13.3C55.2,1.5,49.7,2.5,44.2,2.5z M30.2,10.5c2.7,0,4.9,2.2,4.9,5c0,2.7-2.2,4.9-4.9,4.9
-          c-2.8,0-4.9-2.2-4.9-4.9C25.3,12.8,27.5,10.5,30.2,10.5z"
-          fill="#3776ab"/>
+        <path d="M44.2,2.5C36,2.5,28.6,3.3,22.5,5c-7.9,2.2-9.3,6.8-9.3,12.9v9.5h22v3H13.2c-7.6,0-14.3,4.6-16.4,13.3C-5.8,53.5-6,58.5-3.2,68c2.1,7.1,7,12,14.6,12h9.4V69.7c0-8.6,7.5-16.2,16.3-16.2h21.8c7.3,0,13.1-6,13.1-13.2V15.5c0-7-6-12.2-13.1-13.3C55.2,1.5,49.7,2.5,44.2,2.5z M30.2,10.5c2.7,0,4.9,2.2,4.9,5c0,2.7-2.2,4.9-4.9,4.9c-2.8,0-4.9-2.2-4.9-4.9C25.3,12.8,27.5,10.5,30.2,10.5z" fill="#3776ab"/>
         <!-- Yellow half -->
-        <path d="M75.8,30.4v9.8c0,9-7.7,16.5-16.3,16.5H37.7c-7.2,0-13.1,6.1-13.1,13.2v24.8c0,7,6.1,11.1,13.1,13.2
-          c8.4,2.5,16.4,3,21.8,0c3.6-2,7.1-6.1,7.1-13.2V87H45v-3h28.9c7.6,0,10.4-5.3,13.1-13.2c2.8-8.1,2.7-15.9,0-26.4
-          c-1.9-7.6-5.6-13.2-13.1-13.2H75.8z M60.8,87.5c2.8,0,4.9,2.2,4.9,4.9c0,2.8-2.2,5-4.9,5c-2.7,0-4.9-2.2-4.9-5
-          C55.8,89.7,58,87.5,60.8,87.5z"
-          fill="#ffc836"/>
+        <path d="M75.8,30.4v9.8c0,9-7.7,16.5-16.3,16.5H37.7c-7.2,0-13.1,6.1-13.1,13.2v24.8c0,7,6.1,11.1,13.1,13.2c8.4,2.5,16.4,3,21.8,0c3.6-2,7.1-6.1,7.1-13.2V87H45v-3h28.9c7.6,0,10.4-5.3,13.1-13.2c2.8-8.1,2.7-15.9,0-26.4c-1.9-7.6-5.6-13.2-13.1-13.2H75.8z M60.8,87.5c2.8,0,4.9,2.2,4.9,4.9c0,2.8-2.2,5-4.9,5c-2.7,0-4.9-2.2-4.9-5C55.8,89.7,58,87.5,60.8,87.5z" fill="#ffc836"/>
       </g>
     </svg>
   </div>
 </div>
 
-<!-- ── Mobile Controls ── -->
 <div id="mobile-controls">
   <div class="mobile-btn" id="btn-left">&#9664;</div>
   <div class="mobile-btn" id="btn-right">&#9654;</div>
 </div>
 
-<!-- ── Start Screen ── -->
+<!-- Level Transition -->
+<div id="level-transition">
+  <div class="curtain-left"></div>
+  <div class="curtain-right"></div>
+  <div class="sparkle-ring"></div>
+  <div class="level-content" id="level-content"></div>
+</div>
+
+<!-- Start Screen -->
 <div class="overlay" id="start-screen">
   <div class="modal">
     <h1>Pancake Data Type Catcher</h1>
@@ -339,7 +393,7 @@
   </div>
 </div>
 
-<!-- ── Win Screen ── -->
+<!-- Win Screen -->
 <div class="overlay hidden" id="win-screen">
   <div class="modal">
     <h1>You Did It!</h1>
@@ -350,50 +404,33 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════
-// Data: Python variable assignments
-// ═══════════════════════════════════════
+// Scale support
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const scale = parseFloat(params.get('scale'));
+  if (scale && scale > 0 && scale <= 1) {
+    document.body.style.transform = 'scale(' + scale + ')';
+    document.body.style.transformOrigin = 'top center';
+    document.body.style.height = (100 / scale) + 'vh';
+  }
+})();
+
 const DATA = {
-  int: [
-    'x = 7', 'count = 42', 'age = 0', 'num = -3', 'score = 100',
-    'n = 1', 'total = 999', 'idx = 10', 'size = -50', 'year = 2025',
-    'qty = 8', 'val = 256', 'k = -1', 'step = 5', 'day = 31',
-    'hours = 24', 'items = 0', 'rows = 12', 'cols = 3', 'temp = -40'
-  ],
-  float: [
-    'x = 3.14', 'price = 9.99', 'temp = -2.5', 'rate = 0.5', 'pi = 3.14159',
-    'gpa = 3.8', 'tax = 0.07', 'avg = 85.5', 'height = 5.11', 'weight = 0.0',
-    'speed = 60.5', 'ratio = 1.5', 'cost = 4.99', 'pct = 0.25', 'dist = 26.2',
-    'wage = 15.75', 'tip = 3.50', 'bmi = 22.1', 'mph = 65.0', 'lat = 42.73'
-  ],
-  str: [
-    'name = "hello"', "msg = 'world'", 'x = "42"', 's = "True"', 'ch = "a"',
-    'word = "Python"', "color = 'blue'", 'txt = ""', 'code = "CS1430"', 'q = "why?"',
-    "pet = 'dog'", 'greet = "hi!"', 'lang = "Java"', "ans = '3.14'", 'id = "x7"',
-    "day = 'Mon'", 'sym = "#"', "val = 'False'", 'foo = "0"', "bar = '  '"
-  ],
-  bool: [
-    'flag = True', 'done = False', 'x = True', 'ok = False', 'is_on = True',
-    'found = False', 'valid = True', 'empty = False', 'active = True', 'ready = False',
-    'has_key = True', 'logged = False', 'open = True', 'paused = False', 'win = True',
-    'debug = False', 'is_new = True', 'checked = False', 'alive = True', 'on = False'
-  ]
+  int: ['x = 7','count = 42','age = 0','num = -3','score = 100','n = 1','total = 999','idx = 10','size = -50','year = 2025','qty = 8','val = 256','k = -1','step = 5','day = 31','hours = 24','items = 0','rows = 12','cols = 3','temp = -40'],
+  float: ['x = 3.14','price = 9.99','temp = -2.5','rate = 0.5','pi = 3.14159','gpa = 3.8','tax = 0.07','avg = 85.5','height = 5.11','weight = 0.0','speed = 60.5','ratio = 1.5','cost = 4.99','pct = 0.25','dist = 26.2','wage = 15.75','tip = 3.50','bmi = 22.1','mph = 65.0','lat = 42.73'],
+  str: ['name = "hello"',"msg = 'world'",'x = "42"','s = "True"','ch = "a"','word = "Python"',"color = 'blue'",'txt = ""','code = "CS1430"','q = "why?"',"pet = 'dog'",'greet = "hi!"','lang = "Java"',"ans = '3.14'",'id = "x7"',"day = 'Mon'",'sym = "#"',"val = 'False'",'foo = "0"',"bar = '  '"],
+  bool: ['flag = True','done = False','x = True','ok = False','is_on = True','found = False','valid = True','empty = False','active = True','ready = False','has_key = True','logged = False','open = True','paused = False','win = True','debug = False','is_new = True','checked = False','alive = True','on = False']
 };
 
-const ROUND_ORDER = ['int', 'float', 'str', 'bool'];
-const ROUND_LABELS = {
-  int: 'Catch the <code>int</code> values!',
-  float: 'Catch the <code>float</code> values!',
-  str: 'Catch the <code>str</code> values!',
-  bool: 'Catch the <code>bool</code> values!'
-};
+const ROUND_ORDER = ['int','float','str','bool'];
+const ROUND_LABELS = { int:'Catch the <code>int</code> values!', float:'Catch the <code>float</code> values!', str:'Catch the <code>str</code> values!', bool:'Catch the <code>bool</code> values!' };
 const TYPE_GOAL = 5;
+const TYPE_COLORS = { int:'#5c6bc0', float:'#26a69a', str:'#ef6c00', bool:'#ab47bc' };
+const TYPE_HINTS = { int:'Whole numbers: 7, -3, 0, 42', float:'Decimal numbers: 3.14, 0.5, -2.5', str:'Text in quotes: "hello", \'world\'', bool:'True or False (no quotes!)' };
+const TYPE_ICONS = { int:'42', float:'3.14', str:'"abc"', bool:'T / F' };
 
-// ═══════════════════════════════════════
-// Game State
-// ═══════════════════════════════════════
-let scores = { int: 0, float: 0, str: 0, bool: 0 };
-let currentRound = 0; // index into ROUND_ORDER
+let scores = { int:0, float:0, str:0, bool:0 };
+let currentRound = 0;
 let pancakes = [];
 let chefX = 0;
 let gameRunning = false;
@@ -401,189 +438,215 @@ let lastFrame = 0;
 let spawnTimer = 0;
 let keysDown = {};
 let startTime = 0;
-let usedExpressions = { int: [], float: [], str: [], bool: [] };
 
-const CHEF_SPEED = 420;    // px/sec
-const PANCAKE_BASE_SPEED = 120;
+const CHEF_SPEED = 420;
+const PANCAKE_BASE_SPEED = 155;
 const PANCAKE_MAX_SPEED = 210;
-const SPAWN_INTERVAL_BASE = 1.6;  // seconds
-const SPAWN_INTERVAL_MIN = 0.9;
-const CORRECT_RATIO = 0.55; // 55% chance pancake is correct type
+const SPAWN_INTERVAL_BASE = 1.2;
+const SPAWN_INTERVAL_MIN = 0.7;
+const CORRECT_RATIO = 0.55;
 
 const gameArea = document.getElementById('game-area');
 const chef = document.getElementById('chef');
 
-// ═══════════════════════════════════════
-// Helpers
-// ═══════════════════════════════════════
 function currentType() { return ROUND_ORDER[currentRound]; }
 
 function pickExpression() {
   const type = currentType();
   const isCorrect = Math.random() < CORRECT_RATIO;
-
-  let pool, exprType;
-  if (isCorrect) {
-    exprType = type;
-  } else {
-    const others = ROUND_ORDER.filter(t => t !== type);
-    exprType = others[Math.floor(Math.random() * others.length)];
-  }
-
-  pool = DATA[exprType];
-  const expr = pool[Math.floor(Math.random() * pool.length)];
-  return { text: expr, dataType: exprType, isCorrect };
+  let exprType;
+  if (isCorrect) { exprType = type; }
+  else { const others = ROUND_ORDER.filter(t => t !== type); exprType = others[Math.floor(Math.random()*others.length)]; }
+  const pool = DATA[exprType];
+  return { text: pool[Math.floor(Math.random()*pool.length)], dataType: exprType, isCorrect };
 }
 
-function difficulty() {
-  const total = scores.int + scores.float + scores.str + scores.bool;
-  return Math.min(total / 20, 1);
-}
+function difficulty() { return Math.min((scores.int+scores.float+scores.str+scores.bool)/20, 1); }
+function pancakeSpeed() { return PANCAKE_BASE_SPEED + (PANCAKE_MAX_SPEED-PANCAKE_BASE_SPEED)*difficulty(); }
+function spawnInterval() { return SPAWN_INTERVAL_BASE - (SPAWN_INTERVAL_BASE-SPAWN_INTERVAL_MIN)*difficulty(); }
 
-function pancakeSpeed() {
-  return PANCAKE_BASE_SPEED + (PANCAKE_MAX_SPEED - PANCAKE_BASE_SPEED) * difficulty();
-}
-
-function spawnInterval() {
-  return SPAWN_INTERVAL_BASE - (SPAWN_INTERVAL_BASE - SPAWN_INTERVAL_MIN) * difficulty();
-}
-
-// ═══════════════════════════════════════
-// Scoreboard
-// ═══════════════════════════════════════
 function updateScoreboard() {
   for (const t of ROUND_ORDER) {
-    const display = Math.max(0, scores[t]);
-    document.getElementById('score-' + t).textContent = Math.min(display, TYPE_GOAL) + '/' + TYPE_GOAL;
+    document.getElementById('score-'+t).textContent = Math.min(Math.max(0,scores[t]),TYPE_GOAL)+'/'+TYPE_GOAL;
+    const chip = document.getElementById('chip-'+t);
+    chip.classList.toggle('complete', scores[t]>=TYPE_GOAL);
+    chip.classList.toggle('active-round', t===currentType()&&scores[t]<TYPE_GOAL);
   }
-  const total = ROUND_ORDER.reduce((s, t) => s + Math.min(Math.max(0, scores[t]), TYPE_GOAL), 0);
-  document.getElementById('total-score').textContent = 'Total: ' + total + ' / 20';
+  const total = ROUND_ORDER.reduce((s,t)=>s+Math.min(Math.max(0,scores[t]),TYPE_GOAL),0);
+  document.getElementById('total-score').textContent = 'Total: '+total+' / 20';
 }
 
 function updateRoundBanner() {
   const banner = document.getElementById('round-banner');
-  const type = currentType();
-  banner.className = type;
-  banner.innerHTML = 'Round: ' + ROUND_LABELS[type];
+  banner.className = currentType();
+  banner.innerHTML = 'Round: ' + ROUND_LABELS[currentType()];
 }
 
-// ═══════════════════════════════════════
-// Pancake DOM
-// ═══════════════════════════════════════
 function spawnPancake() {
   const info = pickExpression();
-  const areaW = gameArea.offsetWidth;
-  const pw = 150;
-  const x = Math.random() * (areaW - pw);
-
+  const x = Math.random()*(gameArea.offsetWidth-160);
   const el = document.createElement('div');
   el.className = 'pancake';
-  el.style.left = x + 'px';
-  el.style.top = '-80px';
-  el.innerHTML = '<div class="pancake-body"><span class="pancake-label">' + info.text + '</span></div>';
+  el.style.left = x+'px'; el.style.top = '-80px';
+  el.innerHTML = '<div class="pancake-stack"><div class="pancake-body"><div class="pancake-butter"></div><span class="pancake-label">'+info.text+'</span></div></div>';
   gameArea.appendChild(el);
-
-  pancakes.push({
-    el,
-    x,
-    y: -80,
-    speed: pancakeSpeed() + (Math.random() * 30 - 15),
-    dataType: info.dataType,
-    isCorrect: info.isCorrect,
-    caught: false
-  });
+  pancakes.push({ el, x, y:-80, speed:pancakeSpeed()+(Math.random()*30-15), dataType:info.dataType, isCorrect:info.isCorrect, caught:false });
 }
 
-// ═══════════════════════════════════════
-// Feedback popup
-// ═══════════════════════════════════════
-function showFeedback(x, y, text, good) {
+function clearAllPancakes() { pancakes.forEach(p=>p.el.remove()); pancakes=[]; }
+
+function showFeedback(x,y,text,good) {
   const el = document.createElement('div');
-  el.className = 'feedback ' + (good ? 'good' : 'bad');
-  el.textContent = text;
-  el.style.left = x + 'px';
-  el.style.top = y + 'px';
+  el.className = 'feedback '+(good?'good':'bad');
+  el.textContent = text; el.style.left=x+'px'; el.style.top=y+'px';
   gameArea.appendChild(el);
-  setTimeout(() => el.remove(), 900);
+  setTimeout(()=>el.remove(),900);
 }
 
-// ═══════════════════════════════════════
-// Collision
-// ═══════════════════════════════════════
 function checkCatch(p) {
   const areaH = gameArea.offsetHeight;
-  const chefTop = areaH - 140;
-  const chefLeft = chefX;
-  const chefRight = chefX + 110;
-  const pLeft = p.x;
-  const pRight = p.x + 150;
-  const pBottom = p.y + 60;
-
-  if (pBottom >= chefTop && p.y <= chefTop + 20) {
-    const overlap = Math.min(chefRight, pRight) - Math.max(chefLeft, pLeft);
-    if (overlap > 30) return true;
+  const chefTop = areaH-140;
+  const pBottom = p.y+60;
+  if (pBottom>=chefTop && p.y<=chefTop+20) {
+    const overlap = Math.min(chefX+120,p.x+160)-Math.max(chefX,p.x);
+    if (overlap>30) return true;
   }
   return false;
 }
 
 // ═══════════════════════════════════════
-// Round / Win logic
+// LEVEL TRANSITION
+// ═══════════════════════════════════════
+function shadeColor(hex,amt) {
+  let r=parseInt(hex.substring(1,3),16), g=parseInt(hex.substring(3,5),16), b=parseInt(hex.substring(5,7),16);
+  r=Math.max(0,Math.min(255,r+amt)); g=Math.max(0,Math.min(255,g+amt)); b=Math.max(0,Math.min(255,b+amt));
+  return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
+}
+
+function showLevelTransition(completedType, nextType, callback) {
+  gameRunning = false;
+  clearAllPancakes();
+
+  const overlay = document.getElementById('level-transition');
+  const content = document.getElementById('level-content');
+  const color = TYPE_COLORS[completedType];
+  const nextColor = nextType ? TYPE_COLORS[nextType] : '#e8a845';
+
+  overlay.querySelector('.curtain-left').style.background = 'linear-gradient(135deg,'+color+' 0%,'+shadeColor(color,-40)+' 100%)';
+  overlay.querySelector('.curtain-right').style.background = 'linear-gradient(225deg,'+color+' 0%,'+shadeColor(color,-40)+' 100%)';
+
+  const roundsDone = ROUND_ORDER.filter(t=>scores[t]>=TYPE_GOAL).length;
+
+  let html = '<div class="lvl-checkmark">&#10003;</div>';
+  html += '<div class="lvl-type-icon">'+TYPE_ICONS[completedType]+'</div>';
+  html += '<div class="lvl-complete-badge">'+completedType+' Complete!</div>';
+
+  // Progress pips
+  html += '<div class="lvl-progress">';
+  for (let i=0; i<4; i++) {
+    html += '<div class="lvl-pip'+(i<roundsDone?' done':'')+'"></div>';
+  }
+  html += '</div>';
+
+  if (nextType) {
+    html += '<div class="lvl-divider"></div>';
+    html += '<div class="lvl-next-label">Next Round</div>';
+    html += '<div class="lvl-next-type" style="color:'+nextColor+';">'+nextType+'</div>';
+    html += '<div class="lvl-hint">'+TYPE_HINTS[nextType]+'</div>';
+  } else {
+    html += '<div class="lvl-divider"></div>';
+    html += '<div class="lvl-next-label">All Rounds Complete!</div>';
+  }
+  content.innerHTML = html;
+
+  // Particles
+  overlay.querySelectorAll('.t-particle').forEach(p=>p.remove());
+  for (let i=0; i<35; i++) {
+    const p = document.createElement('div');
+    p.className = 't-particle';
+    const size = 5+Math.random()*18;
+    p.style.width = size+'px'; p.style.height = size+'px';
+    p.style.left = (5+Math.random()*90)+'%';
+    p.style.top = (5+Math.random()*90)+'%';
+    p.style.background = Math.random()>0.4 ? color : (Math.random()>0.5 ? nextColor : '#ffe066');
+    p.style.setProperty('--dx',(Math.random()*240-120)+'px');
+    p.style.setProperty('--dy',(Math.random()*240-120)+'px');
+    p.style.animationDelay = (0.3+Math.random()*1)+'s';
+    overlay.appendChild(p);
+  }
+
+  // Animate in
+  overlay.className = 'active animate-in';
+
+  setTimeout(()=>{
+    overlay.classList.add('show-content');
+  }, 450);
+
+  // Hold, then animate out
+  setTimeout(()=>{
+    overlay.className = 'active animate-out';
+    setTimeout(()=>{
+      overlay.className = '';
+      overlay.querySelectorAll('.t-particle').forEach(p=>p.remove());
+      if (callback) callback();
+    }, 550);
+  }, 3400);
+}
+
+// ═══════════════════════════════════════
+// Round / Win
 // ═══════════════════════════════════════
 function checkRoundComplete() {
   const type = currentType();
-  if (scores[type] >= TYPE_GOAL) {
-    // Advance round
-    const nextIdx = ROUND_ORDER.findIndex((t, i) => i > currentRound && scores[t] < TYPE_GOAL);
-    if (nextIdx !== -1) {
+  if (scores[type]>=TYPE_GOAL) {
+    const completedType = type;
+    let nextIdx = ROUND_ORDER.findIndex((t,i)=>i>currentRound && scores[t]<TYPE_GOAL);
+    if (nextIdx===-1) nextIdx = ROUND_ORDER.findIndex(t=>scores[t]<TYPE_GOAL);
+
+    const allDone = ROUND_ORDER.every(t=>scores[t]>=TYPE_GOAL);
+    if (allDone) {
+      showLevelTransition(completedType, null, ()=>winGame());
+      return;
+    }
+
+    const nextType = ROUND_ORDER[nextIdx];
+    showLevelTransition(completedType, nextType, ()=>{
       currentRound = nextIdx;
       updateRoundBanner();
-    } else {
-      // Check if all done
-      const allDone = ROUND_ORDER.every(t => scores[t] >= TYPE_GOAL);
-      if (allDone) {
-        winGame();
-        return;
-      }
-      // Find any incomplete
-      const any = ROUND_ORDER.findIndex(t => scores[t] < TYPE_GOAL);
-      if (any !== -1) {
-        currentRound = any;
-        updateRoundBanner();
-      }
-    }
+      updateScoreboard();
+      spawnTimer = 0.8;
+      gameRunning = true;
+      lastFrame = performance.now();
+      requestAnimationFrame(gameLoop);
+    });
   }
 }
 
 function winGame() {
   gameRunning = false;
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const mins = Math.floor(elapsed / 60);
-  const secs = elapsed % 60;
-  document.getElementById('win-time').textContent = 'Time: ' + mins + 'm ' + secs + 's';
+  const elapsed = Math.floor((Date.now()-startTime)/1000);
+  document.getElementById('win-time').textContent = 'Time: '+Math.floor(elapsed/60)+'m '+(elapsed%60)+'s';
   document.getElementById('win-screen').classList.remove('hidden');
   spawnConfetti();
 }
 
-// ═══════════════════════════════════════
-// Confetti
-// ═══════════════════════════════════════
 function spawnConfetti() {
   const container = document.createElement('div');
   container.className = 'confetti-container';
   document.body.appendChild(container);
   const colors = ['#5c6bc0','#26a69a','#ef6c00','#ab47bc','#e8a845','#ffe066','#e53935','#4caf50'];
-  for (let i = 0; i < 80; i++) {
+  for (let i=0;i<80;i++) {
     const c = document.createElement('div');
-    c.className = 'confetti';
-    c.style.left = Math.random() * 100 + '%';
-    c.style.background = colors[Math.floor(Math.random() * colors.length)];
-    c.style.animationDuration = (2 + Math.random() * 2) + 's';
-    c.style.animationDelay = (Math.random() * 1.5) + 's';
-    c.style.width = (6 + Math.random() * 8) + 'px';
-    c.style.height = (6 + Math.random() * 8) + 'px';
+    c.className='confetti';
+    c.style.left=Math.random()*100+'%';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=(2+Math.random()*2)+'s';
+    c.style.animationDelay=(Math.random()*1.5)+'s';
+    c.style.width=(6+Math.random()*8)+'px';
+    c.style.height=(6+Math.random()*8)+'px';
     container.appendChild(c);
   }
-  setTimeout(() => container.remove(), 5000);
+  setTimeout(()=>container.remove(),5000);
 }
 
 // ═══════════════════════════════════════
@@ -591,57 +654,44 @@ function spawnConfetti() {
 // ═══════════════════════════════════════
 function gameLoop(ts) {
   if (!gameRunning) return;
-  const dt = Math.min((ts - lastFrame) / 1000, 0.1);
+  const dt = Math.min((ts-lastFrame)/1000, 0.1);
   lastFrame = ts;
-
   const areaW = gameArea.offsetWidth;
   const areaH = gameArea.offsetHeight;
 
-  // Move chef
-  let dx = 0;
-  if (keysDown['ArrowLeft'] || keysDown['a'] || keysDown['mobileLeft']) dx -= 1;
-  if (keysDown['ArrowRight'] || keysDown['d'] || keysDown['mobileRight']) dx += 1;
-  chefX += dx * CHEF_SPEED * dt;
-  chefX = Math.max(0, Math.min(areaW - 110, chefX));
-  chef.style.left = chefX + 'px';
+  let dx=0;
+  if (keysDown['ArrowLeft']||keysDown['a']||keysDown['mobileLeft']) dx-=1;
+  if (keysDown['ArrowRight']||keysDown['d']||keysDown['mobileRight']) dx+=1;
+  chefX += dx*CHEF_SPEED*dt;
+  chefX = Math.max(0,Math.min(areaW-120,chefX));
+  chef.style.left = chefX+'px';
 
-  // Spawn
   spawnTimer -= dt;
-  if (spawnTimer <= 0) {
-    spawnPancake();
-    spawnTimer = spawnInterval();
-  }
+  if (spawnTimer<=0) { spawnPancake(); spawnTimer=spawnInterval(); }
 
-  // Update pancakes
-  for (let i = pancakes.length - 1; i >= 0; i--) {
-    const p = pancakes[i];
-    p.y += p.speed * dt;
-    p.el.style.top = p.y + 'px';
+  for (let i=pancakes.length-1;i>=0;i--) {
+    const p=pancakes[i];
+    p.y += p.speed*dt;
+    p.el.style.top = p.y+'px';
 
     if (!p.caught && checkCatch(p)) {
       p.caught = true;
       const type = currentType();
       if (p.isCorrect) {
-        scores[p.dataType] = Math.min(scores[p.dataType] + 1, TYPE_GOAL);
-        showFeedback(p.x + 40, p.y, '+1 ' + p.dataType, true);
+        scores[p.dataType] = Math.min(scores[p.dataType]+1, TYPE_GOAL);
+        showFeedback(p.x+40,p.y,'+1 '+p.dataType,true);
       } else {
-        scores[type] = Math.max(scores[type] - 1, 0);
-        showFeedback(p.x + 20, p.y, '-1 Not ' + type + '!', false);
+        scores[type] = Math.max(scores[type]-1,0);
+        showFeedback(p.x+20,p.y,'-1 Not '+type+'!',false);
       }
       updateScoreboard();
+      p.el.remove();
+      pancakes.splice(i,1);
       checkRoundComplete();
-      p.el.remove();
-      pancakes.splice(i, 1);
-      continue;
+      break;
     }
-
-    // Off screen
-    if (p.y > areaH + 20) {
-      p.el.remove();
-      pancakes.splice(i, 1);
-    }
+    if (p.y>areaH+20) { p.el.remove(); pancakes.splice(i,1); }
   }
-
   requestAnimationFrame(gameLoop);
 }
 
@@ -649,42 +699,29 @@ function gameLoop(ts) {
 // Init
 // ═══════════════════════════════════════
 function startGame() {
-  scores = { int: 0, float: 0, str: 0, bool: 0 };
-  currentRound = 0;
-  pancakes.forEach(p => p.el.remove());
-  pancakes = [];
-  spawnTimer = 0.5;
-  chefX = gameArea.offsetWidth / 2 - 55;
-  chef.style.left = chefX + 'px';
-  updateScoreboard();
-  updateRoundBanner();
-  startTime = Date.now();
-  gameRunning = true;
-  lastFrame = performance.now();
+  scores={int:0,float:0,str:0,bool:0};
+  currentRound=0;
+  clearAllPancakes();
+  spawnTimer=0.5;
+  chefX=gameArea.offsetWidth/2-60;
+  chef.style.left=chefX+'px';
+  updateScoreboard(); updateRoundBanner();
+  startTime=Date.now(); gameRunning=true;
+  lastFrame=performance.now();
   requestAnimationFrame(gameLoop);
 }
 
-// Events
-document.addEventListener('keydown', e => {
-  keysDown[e.key] = true;
-  if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key)) e.preventDefault();
+document.addEventListener('keydown',e=>{
+  keysDown[e.key]=true;
+  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key)) e.preventDefault();
 });
-document.addEventListener('keyup', e => { keysDown[e.key] = false; });
-
-// Mobile
-document.getElementById('btn-left').addEventListener('touchstart', e => { e.preventDefault(); keysDown['mobileLeft'] = true; });
-document.getElementById('btn-left').addEventListener('touchend', e => { e.preventDefault(); keysDown['mobileLeft'] = false; });
-document.getElementById('btn-right').addEventListener('touchstart', e => { e.preventDefault(); keysDown['mobileRight'] = true; });
-document.getElementById('btn-right').addEventListener('touchend', e => { e.preventDefault(); keysDown['mobileRight'] = false; });
-
-document.getElementById('start-btn').addEventListener('click', () => {
-  document.getElementById('start-screen').classList.add('hidden');
-  startGame();
-});
-document.getElementById('restart-btn').addEventListener('click', () => {
-  document.getElementById('win-screen').classList.add('hidden');
-  startGame();
-});
+document.addEventListener('keyup',e=>{keysDown[e.key]=false;});
+document.getElementById('btn-left').addEventListener('touchstart',e=>{e.preventDefault();keysDown['mobileLeft']=true;});
+document.getElementById('btn-left').addEventListener('touchend',e=>{e.preventDefault();keysDown['mobileLeft']=false;});
+document.getElementById('btn-right').addEventListener('touchstart',e=>{e.preventDefault();keysDown['mobileRight']=true;});
+document.getElementById('btn-right').addEventListener('touchend',e=>{e.preventDefault();keysDown['mobileRight']=false;});
+document.getElementById('start-btn').addEventListener('click',()=>{document.getElementById('start-screen').classList.add('hidden');startGame();});
+document.getElementById('restart-btn').addEventListener('click',()=>{document.getElementById('win-screen').classList.add('hidden');startGame();});
 </script>
 </body>
 </html>
